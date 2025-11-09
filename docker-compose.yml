@@ -2,7 +2,7 @@ version: "3"
 services:
   cpp:
     build: .
-    container_name: lab3_mai_cpp_labs
+    container_name: lab4_mai_cpp_labs
     volumes:
       - .:/workspace
     tty: true
