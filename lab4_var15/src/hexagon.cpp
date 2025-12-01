@@ -4,32 +4,49 @@
 
 template <Scalar T>
 Hexagon<T>::Hexagon(const std::array<Point<T>, 6>& pts)
-    : vertices(pts) {}
+{
+    for (size_t i = 0; i < 6; ++i)
+        vertices[i] = std::make_unique<Point<T>>(pts[i]);
+}
 
 template <Scalar T>
-Hexagon<T>::Hexagon(std::initializer_list<Point<T>> list) 
+Hexagon<T>::Hexagon(std::initializer_list<Point<T>> list)
 {
     if (list.size() != 6)
-        throw std::invalid_argument("Hexagon must have 6 vertices");
-    std::copy(list.begin(), list.end(), vertices.begin());
+        throw std::invalid_argument("Hexagon must have 6 points");
+
+    size_t i = 0;
+    for (const auto& p : list)
+        vertices[i++] = std::make_unique<Point<T>>(p);
 }
 
 template <Scalar T>
-double Hexagon<T>::area() const 
+double Hexagon<T>::area() const
 {
-    return polygon_area(vertices.data(), vertices.size());
+    std::array<Point<T>, 6> pts;
+    for (size_t i = 0; i < 6; ++i)
+        pts[i] = *vertices[i];
+
+    return polygon_area(pts.data(), 6);
 }
 
 template <Scalar T>
-Point<double> Hexagon<T>::center() const 
+Point<double> Hexagon<T>::center() const
 {
-    return polygon_center(vertices.data(), vertices.size());
+    std::array<Point<T>, 6> pts;
+    for (size_t i = 0; i < 6; ++i)
+        pts[i] = *vertices[i];
+
+    return polygon_center(pts.data(), 6);
 }
 
 template <Scalar T>
-bool Hexagon<T>::operator==(const Hexagon<T>& other) const 
+bool Hexagon<T>::operator==(const Hexagon<T>& other) const
 {
-    return vertices == other.vertices;
+    for (size_t i = 0; i < 6; ++i)
+        if (!(*vertices[i] == *other.vertices[i]))
+            return false;
+    return true;
 }
 
 template class Hexagon<int>;

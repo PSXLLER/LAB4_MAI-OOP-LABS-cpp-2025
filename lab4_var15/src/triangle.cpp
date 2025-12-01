@@ -1,30 +1,39 @@
 #include "triangle.hpp"
+#include "polygon_utils.hpp"
 
 template <Scalar T>
-Triangle<T>::Triangle(Point<T> a, Point<T> b, Point<T> c) 
+Triangle<T>::Triangle(Point<T> a, Point<T> b, Point<T> c)
 {
-    vertices[0] = a;
-    vertices[1] = b;
-    vertices[2] = c;
+    vertices[0] = std::make_unique<Point<T>>(a);
+    vertices[1] = std::make_unique<Point<T>>(b);
+    vertices[2] = std::make_unique<Point<T>>(c);
 }
 
 template <Scalar T>
-double Triangle<T>::area() const 
+double Triangle<T>::area() const
 {
-    return polygon_area(vertices.data(), 3);
+    std::array<Point<T>, 3> pts;
+    for (int i = 0; i < 3; ++i)
+        pts[i] = *vertices[i];
+
+    return polygon_area(pts.data(), 3);
 }
 
 template <Scalar T>
-Point<double> Triangle<T>::center() const 
+Point<double> Triangle<T>::center() const
 {
-    return polygon_center(vertices.data(), 3);
+    std::array<Point<T>, 3> pts;
+    for (int i = 0; i < 3; ++i)
+        pts[i] = *vertices[i];
+
+    return polygon_center(pts.data(), 3);
 }
 
 template <Scalar T>
-bool Triangle<T>::operator==(const Triangle<T>& other) const 
+bool Triangle<T>::operator==(const Triangle<T>& other) const
 {
     for (int i = 0; i < 3; ++i)
-        if (!(vertices[i] == other.vertices[i]))
+        if (!(*vertices[i] == *other.vertices[i]))
             return false;
     return true;
 }

@@ -2,7 +2,7 @@
 #include "figure.hpp"
 #include "polygon_utils.hpp"
 #include <array>
-#include <initializer_list>
+#include <memory>
 
 template <Scalar T>
 class Octagon : public Figure<T> 
@@ -16,5 +16,5 @@ public:
     bool operator==(const Octagon<T>& other) const;
 
 private:
-    std::array<Point<T>, 8> vertices{};
+    std::array<std::unique_ptr<Point<T>>, 8> vertices;
 };

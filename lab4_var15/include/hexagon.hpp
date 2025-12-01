@@ -1,6 +1,7 @@
 #pragma once
 #include "figure.hpp"
 #include "polygon_utils.hpp"
+#include <memory>
 #include <array>
 #include <initializer_list>
 
@@ -16,5 +17,5 @@ public:
     bool operator==(const Hexagon<T>& other) const;
 
 private:
-    std::array<Point<T>, 6> vertices{};
+    std::array<std::unique_ptr<Point<T>>, 6> vertices;
 };

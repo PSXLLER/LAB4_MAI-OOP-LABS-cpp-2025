@@ -10,7 +10,7 @@ class Array
 private:
     size_t size_{0};
     size_t capacity_{0};
-    std::shared_ptr<std::shared_ptr<T>[]> data_;
+    std::unique_ptr<std::shared_ptr<T>[]> data_;
 
     void reallocate(size_t new_capacity);
 

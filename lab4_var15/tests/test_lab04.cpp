@@ -8,9 +8,8 @@
 #include "array.hpp"
 #include "polygon_utils.hpp"
 
-// =======================================================
-// 🔹 Polygon utils
-// =======================================================
+//  Polygon utils
+
 TEST(PolygonUtilsTest, SquareAreaAndCenter) {
     Point<int> pts[] = {{0,0},{2,0},{2,2},{0,2}};
     EXPECT_NEAR(polygon_area(pts,4), 4.0, 1e-6);
@@ -27,9 +26,9 @@ TEST(PolygonUtilsTest, TriangleAreaAndCenter) {
     EXPECT_NEAR(c.y, 1.0, 1e-6);
 }
 
-// =======================================================
-// 🔹 Triangle
-// =======================================================
+
+//  Triangle
+
 TEST(TriangleTest, AreaAndCenter) {
     Triangle<double> t({0,0},{4,0},{0,3});
     EXPECT_NEAR(t.area(), 6.0, 1e-6);
@@ -46,9 +45,9 @@ TEST(TriangleTest, EqualityOperator) {
     EXPECT_FALSE(t1 == t3);
 }
 
-// =======================================================
-// 🔹 Hexagon
-// =======================================================
+
+//  Hexagon
+
 TEST(HexagonTest, AreaPositiveAndCenter) {
     std::array<Point<double>,6> pts = {{{0,0},{2,0},{3,2},{2,4},{0,4},{-1,2}}};
     Hexagon<double> h(pts);
@@ -69,9 +68,9 @@ TEST(HexagonTest, InvalidConstructorThrows) {
     EXPECT_THROW((Hexagon<int>({Point<int>(0,0), Point<int>(1,1)})), std::invalid_argument);
 }
 
-// =======================================================
-// 🔹 Octagon
-// =======================================================
+
+//  Octagon
+
 TEST(OctagonTest, AreaPositiveAndCenter) {
     std::array<Point<double>,8> pts = {{{0,0},{2,0},{3,1},{3,3},{2,4},{0,4},{-1,3},{-1,1}}};
     Octagon<double> o(pts);
@@ -92,9 +91,9 @@ TEST(OctagonTest, InvalidConstructorThrows) {
     EXPECT_THROW((Octagon<int>({Point<int>(0,0), Point<int>(1,1), Point<int>(2,2)})), std::invalid_argument);
 }
 
-// =======================================================
+
 // 🔹 DummyFigure (для тестов Array)
-// =======================================================
+
 class DummyFigure : public Figure<double> {
 public:
     double a, cx, cy;
@@ -104,9 +103,8 @@ public:
     Point<double> center() const override { return {cx, cy}; }
 };
 
-// =======================================================
-// 🔹 Array tests
-// =======================================================
+//  Array tests
+
 TEST(ArrayTest, DefaultConstructor) {
     Array<Figure<double>> arr;
     EXPECT_EQ(arr.size(), 0);
